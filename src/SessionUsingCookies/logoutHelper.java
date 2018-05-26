@@ -11,31 +11,39 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/UserDetailsPageHelper")
-public class UserDetailsPageHelper extends HttpServlet {
+/**
+ * Servlet implementation class logoutHelper
+ */
+@WebServlet("/logoutHelper")
+public class logoutHelper extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-    public UserDetailsPageHelper() {
+  
+    public logoutHelper() {
         super();
+        // TODO Auto-generated constructor stub
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Cookie[] cookies=request.getCookies();
-		String username=null;
+		Cookie currentCookie = null;
 		for(Cookie cookie : cookies) {
 			if(cookie.getName().equals("username")) {
-				username=cookie.getValue();
+				currentCookie=cookie;
 			}
 		}
-		if(username!=null) {
-			response.sendRedirect("Userdetails.jsp");
-		}else {
-			RequestDispatcher requestDispatcher=getServletContext().getRequestDispatcher("/Home.html");
-			PrintWriter out=response.getWriter();
-			out.println("<font colur='red'>Either username or password id incorrect </font>");
-			requestDispatcher.forward(request, response);
-			
+		
+		if(currentCookie!=null) {
+			currentCookie.setMaxAge(0);
+			response.addCookie(currentCookie);
 		}
+		
+		//response.sendRedirect("Home.html");
+		
+		RequestDispatcher requestDispatcher=getServletContext().getRequestDispatcher("/Home.html");
+		PrintWriter out=response.getWriter();
+		out.println("You sucessfully logged out");
+		
+		requestDispatcher.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

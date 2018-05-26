@@ -23,10 +23,10 @@
 		}
 	%>
 	<h1>Hi <%=username %> you details is here:<h1><br>
-	<p1>Name: <%=username%></p1>
+	<p1>Name: <%=username%></p1><br>
 	<p2>Work on: SAP Labs</p2>
 	
-	<form action='/logoutHelper' method="GET">
+	<form action="logoutHelper" method="GET">
 		<input type='submit' value='logout'>
 	</form>
 	
